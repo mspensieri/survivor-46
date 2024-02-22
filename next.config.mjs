@@ -1,10 +1,11 @@
 const isProd = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: "export",
-  distDir: "docs",
-  assetPrefix: isProd ? "https://mspensieri.github.io/survivor-46" : undefined,
-};
+const nextConfig = isProd
+  ? {
+      output: "export",
+      distDir: "docs",
+    }
+  : {};
 
 export default nextConfig;
