@@ -132,7 +132,7 @@ export const PLAYERS: Record<string, Player> = {
     ],
   },
   TIM: {
-    name: "Tim Spicer",
+    name: "Tim",
     status: "active",
     weeks: [{}],
   },
