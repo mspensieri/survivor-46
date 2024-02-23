@@ -39,3 +39,7 @@ export function computeTeamScore(team: Team, weekNumber: number) {
 
   return score;
 }
+
+export function getTeamScore(team: Team, weekNumber: number) {
+  return computeTeamScore(team, weekNumber) || "-";
+}

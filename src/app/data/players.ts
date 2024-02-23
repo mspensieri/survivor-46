@@ -17,7 +17,7 @@ export type Player = {
 
 export const PLAYERS: Record<string, Player> = {
   JEM: {
-    name: 'Jemila "Jem" Hussain-Adams',
+    name: "Jem",
     status: "active",
     weeks: [
       {},
@@ -28,7 +28,7 @@ export const PLAYERS: Record<string, Player> = {
     ],
   },
   BEN: {
-    name: "Ben Katzman",
+    name: "Ben",
     status: "eliminated",
     weeks: [
       {
@@ -37,21 +37,17 @@ export const PLAYERS: Record<string, Player> = {
     ],
   },
   JESS: {
-    name: 'Jessica "Jess" Chong',
+    name: "Jess",
     status: "jury",
-    weeks: [
-      {
-        advantage: 5,
-      },
-    ],
+    weeks: [],
   },
   BHANU: {
-    name: "Bhanu Gopal",
+    name: "Bhanu",
     status: "winner",
     weeks: [{}, { idolFound: 10 }],
   },
   KENZIE: {
-    name: "Kenzie Petty",
+    name: "Kenzie",
     status: "active",
     weeks: [
       {},
@@ -61,7 +57,7 @@ export const PLAYERS: Record<string, Player> = {
     ],
   },
   CHARLIE: {
-    name: "Charlie Davis",
+    name: "Charlie",
     status: "active",
     weeks: [
       {},
@@ -71,57 +67,61 @@ export const PLAYERS: Record<string, Player> = {
     ],
   },
   LIZ: {
-    name: "Liz Wilcox",
+    name: "Liz",
     status: "active",
     weeks: [{}],
   },
   JELINSKY: {
-    name: 'David "Jelinsky" Jelinsky',
+    name: "Jelinsky",
     status: "active",
     weeks: [{}],
   },
   MARIA: {
-    name: "Maria Shrime Gonzalez",
+    name: "Maria",
     status: "active",
     weeks: [{}],
   },
   HUNTER: {
-    name: "Hunter McKnight",
+    name: "Hunter",
     status: "active",
     weeks: [{}],
   },
   MORIAH: {
-    name: "Moriah Gaynor",
+    name: "Moriah",
     status: "active",
     weeks: [{}, {}],
   },
   Q: {
-    name: "Q Burdette",
+    name: "Q",
     status: "active",
     weeks: [{}],
   },
   SODA: {
-    name: "Soda Thompson",
+    name: "Soda",
     status: "active",
     weeks: [{}],
   },
   RANDEN: {
-    name: "Randen Montalvo",
+    name: "Randen",
     status: "active",
     weeks: [{}],
   },
   TIFFANY: {
-    name: "Tiffany Nicole Ervin",
+    name: "Tiffany",
     status: "active",
     weeks: [{}],
   },
   TEVIN: {
-    name: "Tevin Davis",
+    name: "Tevin",
     status: "active",
-    weeks: [{}],
+    weeks: [
+      {
+        advantage: 5,
+      },
+    ],
   },
   VENUS: {
-    name: "Venus Vafa",
+    name: "Venus",
     status: "active",
     weeks: [
       {},
@@ -162,4 +162,12 @@ export function computePlayerScore(
   }
 
   return score;
+}
+
+export function getPlayerScore(
+  player: Player,
+  weekNumber: number,
+  scoreKey: keyof Points | "total"
+) {
+  return computePlayerScore(player, weekNumber, scoreKey) || "-";
 }

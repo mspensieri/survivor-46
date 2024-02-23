@@ -5,10 +5,15 @@ import Tabs from "react-bootstrap/Tabs";
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
-import Image from "next/image";
 
-import { teams, computeTeamScore } from "./data/teams";
-import { players, computePlayerScore, Player, Points } from "./data/players";
+import { teams, computeTeamScore, getTeamScore } from "./data/teams";
+import {
+  players,
+  computePlayerScore,
+  Player,
+  Points,
+  getPlayerScore,
+} from "./data/players";
 
 const currentWeek = players[0].weeks.length;
 
@@ -78,7 +83,7 @@ function generateWeekLeaderboard(weekNumber: number) {
               weekNumber > 1 ? computeTeamScore(team, weekNumber - 1) : 0;
 
             if (weekNumber === 1) {
-              return <td>{thisWeek}</td>;
+              return <td>{thisWeek || "-"}</td>;
             } else {
               if (thisWeek > lastWeek) {
                 return (
@@ -90,7 +95,7 @@ function generateWeekLeaderboard(weekNumber: number) {
                   </td>
                 );
               } else {
-                return <td>{thisWeek}</td>;
+                return <td>{thisWeek || "-"}</td>;
               }
             }
           }
@@ -174,7 +179,7 @@ function generateWeekScores(weekNumber: number) {
                 : 0;
 
             if (weekNumber === 1) {
-              return <td>{thisWeek}</td>;
+              return <td>{thisWeek || "-"}</td>;
             } else {
               if (thisWeek > lastWeek) {
                 return (
@@ -186,7 +191,7 @@ function generateWeekScores(weekNumber: number) {
                   </td>
                 );
               } else {
-                return <td>{thisWeek}</td>;
+                return <td>{thisWeek || "-"}</td>;
               }
             }
           }
