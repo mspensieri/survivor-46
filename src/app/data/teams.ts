@@ -30,11 +30,11 @@ export const teams: Array<Team> = [
   },
 ];
 
-export function computeTeamScore(team: Team) {
+export function computeTeamScore(team: Team, weekNumber: number) {
   let score = 0;
 
   for (const player of team.players) {
-    score += computePlayerScore(player);
+    score += computePlayerScore(player, weekNumber, "total");
   }
 
   return score;

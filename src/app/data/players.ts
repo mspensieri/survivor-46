@@ -1,266 +1,164 @@
 export type Points = {
-  teamImmunity: number;
-  individualImmunity: number;
-  advantage: number;
-  idolFound: number;
-  idolUsed: number;
-  placement: number;
+  teamImmunity?: number;
+  individualImmunity?: number;
+  advantage?: number;
+  idolFound?: number;
+  idolUsed?: number;
+  placement?: number;
 };
+
+export type PlayerStatus = "active" | "eliminated" | "jury" | "winner";
 
 export type Player = {
   name: string;
+  status: PlayerStatus;
   weeks: Array<Points>;
 };
 
 export const PLAYERS: Record<string, Player> = {
   JEM: {
     name: 'Jemila "Jem" Hussain-Adams',
+    status: "active",
     weeks: [
+      {},
       {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
+        teamImmunity: 2,
       },
+      {},
     ],
   },
   BEN: {
     name: "Ben Katzman",
+    status: "eliminated",
     weeks: [
       {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
+        individualImmunity: 3,
       },
     ],
   },
   JESS: {
     name: 'Jessica "Jess" Chong',
+    status: "jury",
     weeks: [
       {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
+        advantage: 5,
       },
     ],
   },
   BHANU: {
     name: "Bhanu Gopal",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "winner",
+    weeks: [{}, { idolFound: 10 }],
   },
   KENZIE: {
     name: "Kenzie Petty",
+    status: "active",
     weeks: [
+      {},
       {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
+        idolUsed: 1,
       },
     ],
   },
   CHARLIE: {
     name: "Charlie Davis",
+    status: "active",
     weeks: [
+      {},
       {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
+        placement: 3,
       },
     ],
   },
   LIZ: {
     name: "Liz Wilcox",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   JELINSKY: {
     name: 'David "Jelinsky" Jelinsky',
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   MARIA: {
     name: "Maria Shrime Gonzalez",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   HUNTER: {
     name: "Hunter McKnight",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   MORIAH: {
     name: "Moriah Gaynor",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}, {}],
   },
   Q: {
     name: "Q Burdette",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   SODA: {
     name: "Soda Thompson",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   RANDEN: {
     name: "Randen Montalvo",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   TIFFANY: {
     name: "Tiffany Nicole Ervin",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   TEVIN: {
     name: "Tevin Davis",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
   VENUS: {
     name: "Venus Vafa",
+    status: "active",
     weeks: [
+      {},
+      {},
       {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
+        idolFound: 20,
       },
     ],
   },
   TIM: {
     name: "Tim Spicer",
-    weeks: [
-      {
-        teamImmunity: 0,
-        individualImmunity: 0,
-        advantage: 0,
-        idolFound: 0,
-        idolUsed: 0,
-        placement: 0,
-      },
-    ],
+    status: "active",
+    weeks: [{}],
   },
 };
 
 export const players: Array<Player> = Object.values(PLAYERS);
 
-export function computePlayerScore(player: Player) {
+export function computePlayerScore(
+  player: Player,
+  weekNumber: number,
+  scoreKey: keyof Points | "total"
+) {
   let score = 0;
-  for (const week of player.weeks) {
-    score +=
-      week.teamImmunity +
-      week.individualImmunity +
-      week.advantage +
-      week.idolFound +
-      week.idolUsed +
-      week.placement;
+
+  for (const week of player.weeks.slice(0, weekNumber)) {
+    if (scoreKey === "total") {
+      score +=
+        (week.teamImmunity || 0) +
+        (week.individualImmunity || 0) +
+        (week.advantage || 0) +
+        (week.idolFound || 0) +
+        (week.idolUsed || 0) +
+        (week.placement || 0);
+    } else {
+      score += week[scoreKey] || 0;
+    }
   }
 
   return score;
