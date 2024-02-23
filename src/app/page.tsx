@@ -72,6 +72,29 @@ function generateWeekLeaderboard(weekNumber: number) {
       </thead>
       <tbody>
         {...thisWeekRankings.map((team, i) => {
+          function getScore() {
+            const thisWeek = computeTeamScore(team, weekNumber);
+            const lastWeek =
+              weekNumber > 1 ? computeTeamScore(team, weekNumber - 1) : 0;
+
+            if (weekNumber === 1) {
+              return <td>{thisWeek}</td>;
+            } else {
+              if (thisWeek > lastWeek) {
+                return (
+                  <td>
+                    {thisWeek}{" "}
+                    <span style={styles.indicatorGreen}>
+                      (+{thisWeek - lastWeek})
+                    </span>
+                  </td>
+                );
+              } else {
+                return <td>{thisWeek}</td>;
+              }
+            }
+          }
+
           let rank;
           if (weekNumber === 1) {
             rank = <td>#{i + 1}</td>;
@@ -104,7 +127,7 @@ function generateWeekLeaderboard(weekNumber: number) {
             <tr key={team.name}>
               {rank}
               <td>{team.name}</td>
-              <td>{computeTeamScore(team, weekNumber)}</td>
+              <td>{getScore()}</td>
             </tr>
           );
         })}
