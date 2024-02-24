@@ -28,6 +28,50 @@ export const teams: Array<Team> = [
       PLAYERS.VENUS,
     ],
   },
+  {
+    name: "Survivor Vanguard2",
+    players: [
+      PLAYERS.MORIAH,
+      PLAYERS.JESS,
+      PLAYERS.JEM,
+      PLAYERS.CHARLIE,
+      PLAYERS.HUNTER,
+      PLAYERS.VENUS,
+    ],
+  },
+  {
+    name: "Survivor Vanguard3",
+    players: [
+      PLAYERS.MORIAH,
+      PLAYERS.JESS,
+      PLAYERS.JEM,
+      PLAYERS.CHARLIE,
+      PLAYERS.HUNTER,
+      PLAYERS.VENUS,
+    ],
+  },
+  {
+    name: "Survivor Vanguard4",
+    players: [
+      PLAYERS.MORIAH,
+      PLAYERS.JESS,
+      PLAYERS.JEM,
+      PLAYERS.CHARLIE,
+      PLAYERS.HUNTER,
+      PLAYERS.VENUS,
+    ],
+  },
+  {
+    name: "Survivor Vanguard5",
+    players: [
+      PLAYERS.MORIAH,
+      PLAYERS.JESS,
+      PLAYERS.JEM,
+      PLAYERS.CHARLIE,
+      PLAYERS.HUNTER,
+      PLAYERS.VENUS,
+    ],
+  },
 ];
 
 export function computeTeamScore(team: Team, weekNumber: number) {

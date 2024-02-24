@@ -5,15 +5,13 @@ import Tabs from "react-bootstrap/Tabs";
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Image from "next/image";
 
-import { teams, computeTeamScore, getTeamScore } from "./data/teams";
-import {
-  players,
-  computePlayerScore,
-  Player,
-  Points,
-  getPlayerScore,
-} from "./data/players";
+import { teams, computeTeamScore } from "./data/teams";
+import { players, computePlayerScore, Player, Points } from "./data/players";
+import { TabContent } from "react-bootstrap";
 
 const currentWeek = players[0].weeks.length;
 
@@ -26,6 +24,9 @@ const styles = {
   indicatorRed: {
     fontSize: "10pt",
     color: "red",
+  },
+  cardNumber: {
+    fontSize: "80pt",
   },
 };
 
@@ -67,7 +68,7 @@ function generateWeekLeaderboard(weekNumber: number) {
   );
 
   return (
-    <Table striped>
+    <Table striped responsive>
       <thead>
         <tr>
           <th>Rank</th>
@@ -154,7 +155,7 @@ function generateWeekScores(weekNumber: number) {
   );
 
   return (
-    <Table striped>
+    <Table striped responsive>
       <thead>
         <tr>
           <th>Rank</th>
@@ -245,139 +246,166 @@ function generateWeekScores(weekNumber: number) {
 }
 
 function UncontrolledExample() {
+  const thisWeekRankings = [...teams].sort(
+    (a, b) => computeTeamScore(b, -1) - computeTeamScore(a, -1)
+  );
+
   return (
-    <Tabs
-      defaultActiveKey="leaderboard"
-      id="uncontrolled-tab-example"
-      className="mb-3"
-    >
-      <Tab eventKey="leaderboard" title="Leaderboard">
+    <Row>
+      <Col>
+        <Image
+          src="https://static.wikia.nocookie.net/pokemon-survivor/images/7/74/S1_Torch.png/revision/latest?cb=20171202095656"
+          alt="survivor logo"
+          width={30}
+          height={30}
+          style={{ position: "fixed" }}
+        ></Image>
         <Tabs
-          defaultActiveKey="overall"
-          id="week-selector-leaderboard"
+          defaultActiveKey="leaderboard"
+          id="uncontrolled-tab-example"
           className="mb-3"
+          style={{ marginLeft: "40px" }}
         >
-          <Tab eventKey="1" title="Week 1">
-            {generateWeekLeaderboard(1)}
+          <Tab eventKey="leaderboard" title="Leaderboard">
+            <Tabs
+              defaultActiveKey="overall"
+              id="week-selector-leaderboard"
+              className="mb-3"
+            >
+              <Tab eventKey="1" title="Week 1">
+                {generateWeekLeaderboard(1)}
+              </Tab>
+              <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
+                {generateWeekLeaderboard(2)}
+              </Tab>
+              <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
+                {generateWeekLeaderboard(3)}
+              </Tab>
+              <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
+                {generateWeekLeaderboard(4)}
+              </Tab>
+              <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
+                {generateWeekLeaderboard(5)}
+              </Tab>
+              <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
+                {generateWeekLeaderboard(6)}
+              </Tab>
+              <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
+                {generateWeekLeaderboard(7)}
+              </Tab>
+              <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
+                {generateWeekLeaderboard(8)}
+              </Tab>
+              <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
+                {generateWeekLeaderboard(9)}
+              </Tab>
+              <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
+                {generateWeekLeaderboard(10)}
+              </Tab>
+              <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
+                {generateWeekLeaderboard(11)}
+              </Tab>
+              <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
+                {generateWeekLeaderboard(12)}
+              </Tab>
+              <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
+                {generateWeekLeaderboard(13)}
+              </Tab>
+              <Tab eventKey="overall" title="Overall">
+                {generateWeekLeaderboard(currentWeek)}
+              </Tab>
+            </Tabs>
           </Tab>
-          <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
-            {generateWeekLeaderboard(2)}
+          <Tab eventKey="teams" title="Teams">
+            <Row>
+              {...thisWeekRankings.map((team, i) => {
+                return (
+                  <Col key={team.name} xs={12} sm={6} md={4} lg={3}>
+                    <Card className="text-center">
+                      <Card.Body>
+                        <Card.Title style={styles.cardNumber}>
+                          {i === 0 ? "👑" : `#${i + 1}`}{" "}
+                        </Card.Title>
+                        <Card.Title>{team.name}</Card.Title>
+                        {...[...team.players]
+                          .sort(
+                            (a, b) =>
+                              computePlayerScore(b, currentWeek, "total") -
+                              computePlayerScore(a, currentWeek, "total")
+                          )
+                          .map((player, i) => {
+                            return (
+                              <Card.Text key={i}>
+                                {player.name} (
+                                {computePlayerScore(
+                                  player,
+                                  currentWeek,
+                                  "total"
+                                )}
+                                )
+                              </Card.Text>
+                            );
+                          })}
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
           </Tab>
-          <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
-            {generateWeekLeaderboard(3)}
-          </Tab>
-          <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
-            {generateWeekLeaderboard(4)}
-          </Tab>
-          <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
-            {generateWeekLeaderboard(5)}
-          </Tab>
-          <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
-            {generateWeekLeaderboard(6)}
-          </Tab>
-          <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
-            {generateWeekLeaderboard(7)}
-          </Tab>
-          <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
-            {generateWeekLeaderboard(8)}
-          </Tab>
-          <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
-            {generateWeekLeaderboard(9)}
-          </Tab>
-          <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
-            {generateWeekLeaderboard(10)}
-          </Tab>
-          <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
-            {generateWeekLeaderboard(11)}
-          </Tab>
-          <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
-            {generateWeekLeaderboard(12)}
-          </Tab>
-          <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
-            {generateWeekLeaderboard(13)}
-          </Tab>
-          <Tab eventKey="overall" title="Overall">
-            {generateWeekLeaderboard(currentWeek)}
+          <Tab eventKey="scores" title="Scores">
+            <Tabs
+              defaultActiveKey="overall"
+              id="week-selector-scores"
+              className="mb-3"
+            >
+              <Tab eventKey="1" title="Week 1">
+                {generateWeekScores(1)}
+              </Tab>
+              <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
+                {generateWeekScores(2)}
+              </Tab>
+              <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
+                {generateWeekScores(3)}
+              </Tab>
+              <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
+                {generateWeekScores(4)}
+              </Tab>
+              <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
+                {generateWeekScores(5)}
+              </Tab>
+              <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
+                {generateWeekScores(6)}
+              </Tab>
+              <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
+                {generateWeekScores(7)}
+              </Tab>
+              <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
+                {generateWeekScores(8)}
+              </Tab>
+              <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
+                {generateWeekScores(9)}
+              </Tab>
+              <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
+                {generateWeekScores(10)}
+              </Tab>
+              <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
+                {generateWeekScores(11)}
+              </Tab>
+              <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
+                {generateWeekScores(12)}
+              </Tab>
+              <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
+                {generateWeekScores(13)}
+              </Tab>
+              <Tab eventKey="overall" title="Overall">
+                {generateWeekScores(currentWeek)}
+              </Tab>
+            </Tabs>
           </Tab>
         </Tabs>
-      </Tab>
-      <Tab eventKey="teams" title="Teams">
-        {...teams.map((team, i) => {
-          return (
-            <Card key={team.name} style={{ width: "18rem" }}>
-              <Card.Img variant="top" src="holder.js/90px180" />
-              <Card.Body>
-                <Card.Title>{team.name}</Card.Title>
-                {...[...team.players]
-                  .sort(
-                    (a, b) =>
-                      computePlayerScore(b, currentWeek, "total") -
-                      computePlayerScore(a, currentWeek, "total")
-                  )
-                  .map((player, i) => {
-                    return (
-                      <Card.Text key={i}>
-                        {player.name} (
-                        {computePlayerScore(player, currentWeek, "total")})
-                      </Card.Text>
-                    );
-                  })}
-              </Card.Body>
-            </Card>
-          );
-        })}
-      </Tab>
-      <Tab eventKey="scores" title="Scores">
-        <Tabs
-          defaultActiveKey="overall"
-          id="week-selector-scores"
-          className="mb-3"
-        >
-          <Tab eventKey="1" title="Week 1">
-            {generateWeekScores(1)}
-          </Tab>
-          <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
-            {generateWeekScores(2)}
-          </Tab>
-          <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
-            {generateWeekScores(3)}
-          </Tab>
-          <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
-            {generateWeekScores(4)}
-          </Tab>
-          <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
-            {generateWeekScores(5)}
-          </Tab>
-          <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
-            {generateWeekScores(6)}
-          </Tab>
-          <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
-            {generateWeekScores(7)}
-          </Tab>
-          <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
-            {generateWeekScores(8)}
-          </Tab>
-          <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
-            {generateWeekScores(9)}
-          </Tab>
-          <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
-            {generateWeekScores(10)}
-          </Tab>
-          <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
-            {generateWeekScores(11)}
-          </Tab>
-          <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
-            {generateWeekScores(12)}
-          </Tab>
-          <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
-            {generateWeekScores(13)}
-          </Tab>
-          <Tab eventKey="overall" title="Overall">
-            {generateWeekScores(currentWeek)}
-          </Tab>
-        </Tabs>
-      </Tab>
-    </Tabs>
+      </Col>
+    </Row>
   );
 }
 

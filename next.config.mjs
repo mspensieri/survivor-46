@@ -18,7 +18,24 @@ const nextConfig = isGithubActions
       distDir: "docs",
       assetPrefix: assetPrefix,
       basePath: basePath,
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "static.wikia.nocookie.net",
+          },
+        ],
+      },
     }
-  : {};
+  : {
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "static.wikia.nocookie.net",
+          },
+        ],
+      },
+    };
 
 export default nextConfig;
