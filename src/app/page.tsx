@@ -254,7 +254,7 @@ function UncontrolledExample() {
     <Row>
       <Col>
         <Image
-          src="https://static.wikia.nocookie.net/pokemon-survivor/images/7/74/S1_Torch.png/revision/latest?cb=20171202095656"
+          src="/torch.webp"
           alt="survivor logo"
           width={30}
           height={30}
