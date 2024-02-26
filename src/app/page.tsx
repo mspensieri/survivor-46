@@ -7,13 +7,11 @@ import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Image from "next/image";
 
 import { Player } from "./data/players";
 import { computePlayerScore, weeks, Points } from "./data/weeks";
 import { getTeamRankings, getPlayerRankings } from "./data/rankings";
 import Navbar from "react-bootstrap/esm/Navbar";
-import { Container } from "react-bootstrap";
 
 const currentWeek = weeks.length;
 const teamRankings = getTeamRankings();
@@ -249,13 +247,13 @@ function UncontrolledExample() {
     <Row>
       <Navbar className="bg-body-tertiary">
         <Navbar.Brand>
-          <Image
-            src="/torch.webp"
+          <img
+            src="torch.webp"
             alt="survivor logo"
             width={30}
             height={30}
             style={{ display: "inline" }}
-          ></Image>
+          ></img>
           Survivor Pool Season 46
         </Navbar.Brand>
       </Navbar>
