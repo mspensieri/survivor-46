@@ -34,6 +34,10 @@
         --bs-nav-tabs-link-hover-color: var(--link-color-dark);
     }
 
+    .nav-underline {
+        --bs-nav-underline-link-active-color: var(--bs-link-color);
+    }
+
     .table {
         --bs-table-striped-bg: #faece5;
 

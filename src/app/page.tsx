@@ -60,7 +60,7 @@ function getBadge(player: Player) {
   }
 }
 
-function generateWeekLeaderboard(weekNumber: number) {
+function generateLeaderboardForWeek(weekNumber: number) {
   const thisWeekRankings = teamRankings[weekNumber] || [];
   const lastWeekRankings = teamRankings[weekNumber - 1];
 
@@ -138,7 +138,7 @@ function generateWeekLeaderboard(weekNumber: number) {
   );
 }
 
-function generateWeekScores(weekNumber: number) {
+function generatePlayerScoresForWeek(weekNumber: number) {
   const thisWeekRankings = playerRankings[weekNumber] || [];
   const lastWeekRankings = playerRankings[weekNumber - 1];
 
@@ -260,6 +260,7 @@ function UncontrolledExample() {
       <Tabs
         defaultActiveKey="leaderboard"
         id="uncontrolled-tab-example"
+        variant="underline"
         className="mb-3"
         style={{ marginLeft: "15px" }}
       >
@@ -270,43 +271,43 @@ function UncontrolledExample() {
             className="mb-3"
           >
             <Tab eventKey="1" title="Week 1">
-              {generateWeekLeaderboard(0)}
+              {generateLeaderboardForWeek(0)}
             </Tab>
             <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
-              {generateWeekLeaderboard(1)}
+              {generateLeaderboardForWeek(1)}
             </Tab>
             <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
-              {generateWeekLeaderboard(2)}
+              {generateLeaderboardForWeek(2)}
             </Tab>
             <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
-              {generateWeekLeaderboard(3)}
+              {generateLeaderboardForWeek(3)}
             </Tab>
             <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
-              {generateWeekLeaderboard(4)}
+              {generateLeaderboardForWeek(4)}
             </Tab>
             <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
-              {generateWeekLeaderboard(5)}
+              {generateLeaderboardForWeek(5)}
             </Tab>
             <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
-              {generateWeekLeaderboard(6)}
+              {generateLeaderboardForWeek(6)}
             </Tab>
             <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
-              {generateWeekLeaderboard(7)}
+              {generateLeaderboardForWeek(7)}
             </Tab>
             <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
-              {generateWeekLeaderboard(8)}
+              {generateLeaderboardForWeek(8)}
             </Tab>
             <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
-              {generateWeekLeaderboard(9)}
+              {generateLeaderboardForWeek(9)}
             </Tab>
             <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
-              {generateWeekLeaderboard(10)}
+              {generateLeaderboardForWeek(10)}
             </Tab>
             <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
-              {generateWeekLeaderboard(11)}
+              {generateLeaderboardForWeek(11)}
             </Tab>
             <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
-              {generateWeekLeaderboard(12)}
+              {generateLeaderboardForWeek(12)}
             </Tab>
           </Tabs>
         </Tab>
@@ -343,50 +344,50 @@ function UncontrolledExample() {
             })}
           </Row>
         </Tab>
-        <Tab eventKey="scores" title="Scores">
+        <Tab eventKey="players" title="Players">
           <Tabs
             defaultActiveKey={currentWeek}
-            id="week-selector-scores"
+            id="week-selector-players"
             className="mb-3"
           >
             <Tab eventKey="1" title="Week 1">
-              {generateWeekScores(0)}
+              {generatePlayerScoresForWeek(0)}
             </Tab>
             <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
-              {generateWeekScores(1)}
+              {generatePlayerScoresForWeek(1)}
             </Tab>
             <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
-              {generateWeekScores(2)}
+              {generatePlayerScoresForWeek(2)}
             </Tab>
             <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
-              {generateWeekScores(3)}
+              {generatePlayerScoresForWeek(3)}
             </Tab>
             <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
-              {generateWeekScores(4)}
+              {generatePlayerScoresForWeek(4)}
             </Tab>
             <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
-              {generateWeekScores(5)}
+              {generatePlayerScoresForWeek(5)}
             </Tab>
             <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
-              {generateWeekScores(6)}
+              {generatePlayerScoresForWeek(6)}
             </Tab>
             <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
-              {generateWeekScores(7)}
+              {generatePlayerScoresForWeek(7)}
             </Tab>
             <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
-              {generateWeekScores(8)}
+              {generatePlayerScoresForWeek(8)}
             </Tab>
             <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
-              {generateWeekScores(9)}
+              {generatePlayerScoresForWeek(9)}
             </Tab>
             <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
-              {generateWeekScores(10)}
+              {generatePlayerScoresForWeek(10)}
             </Tab>
             <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
-              {generateWeekScores(11)}
+              {generatePlayerScoresForWeek(11)}
             </Tab>
             <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
-              {generateWeekScores(12)}
+              {generatePlayerScoresForWeek(12)}
             </Tab>
           </Tabs>
         </Tab>
