@@ -18,7 +18,28 @@ const nextConfig = isGithubActions
       distDir: "docs",
       assetPrefix: assetPrefix,
       basePath: basePath,
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "**",
+            port: "",
+            pathname: "**",
+          },
+        ],
+      },
     }
-  : {};
+  : {
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "**",
+            port: "",
+            pathname: "**",
+          },
+        ],
+      },
+    };
 
 export default nextConfig;

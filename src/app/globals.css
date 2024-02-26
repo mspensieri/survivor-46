@@ -13,6 +13,13 @@
     --bs-body-bg:#1a310e;
     --bs-link-color: #faece5;
     --link-color-dark: #b0aca2;
+    --bs-tertiary-bg-rgb:#1a310e;
+
+    .navbar-brand {
+        margin-left: 8px;
+        --bs-navbar-brand-color: #faece5;
+        --bs-navbar-brand-hover-color: #faece5;
+    }
 
     .nav {
         --bs-nav-link-color: var(--link-color-dark);

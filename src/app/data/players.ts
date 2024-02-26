@@ -1,173 +1,123 @@
-export type Points = {
-  teamImmunity?: number;
-  individualImmunity?: number;
-  advantage?: number;
-  idolFound?: number;
-  idolUsed?: number;
-  placement?: number;
-};
-
 export type PlayerStatus = "active" | "eliminated" | "jury" | "winner";
 
+export enum PlayerKeys {
+  JEM = "JEM",
+  BEN = "BEN",
+  JESS = "JESS",
+  BHANU = "BHANU",
+  KENZIE = "KENZIE",
+  CHARLIE = "CHARLIE",
+  LIZ = "LIZ",
+  JELINSKY = "JELINSKY",
+  MARIA = "MARIA",
+  HUNTER = "HUNTER",
+  MORIAH = "MORIAH",
+  Q = "Q",
+  SODA = "SODA",
+  RANDEN = "RANDEN",
+  TIFFANY = "TIFFANY",
+  TEVIN = "TEVIN",
+  VENUS = "VENUS",
+  TIM = "TIM",
+}
+
 export type Player = {
+  key: PlayerKeys;
   name: string;
   status: PlayerStatus;
-  weeks: Array<Points>;
 };
 
-export const PLAYERS: Record<string, Player> = {
-  JEM: {
+export const PLAYERS: Record<PlayerKeys, Player> = {
+  [PlayerKeys.JEM]: {
+    key: PlayerKeys.JEM,
     name: "Jem",
     status: "active",
-    weeks: [
-      {},
-      {
-        teamImmunity: 2,
-      },
-      {},
-    ],
   },
-  BEN: {
+  [PlayerKeys.BEN]: {
+    key: PlayerKeys.BEN,
     name: "Ben",
     status: "eliminated",
-    weeks: [
-      {
-        individualImmunity: 3,
-      },
-    ],
   },
-  JESS: {
+  [PlayerKeys.JESS]: {
+    key: PlayerKeys.JESS,
     name: "Jess",
     status: "jury",
-    weeks: [],
   },
-  BHANU: {
+  [PlayerKeys.BHANU]: {
+    key: PlayerKeys.BHANU,
     name: "Bhanu",
     status: "winner",
-    weeks: [{}, { idolFound: 10 }],
   },
-  KENZIE: {
+  [PlayerKeys.KENZIE]: {
+    key: PlayerKeys.KENZIE,
     name: "Kenzie",
     status: "active",
-    weeks: [
-      {},
-      {
-        idolUsed: 1,
-      },
-    ],
   },
-  CHARLIE: {
+  [PlayerKeys.CHARLIE]: {
+    key: PlayerKeys.CHARLIE,
     name: "Charlie",
     status: "active",
-    weeks: [
-      {},
-      {
-        placement: 3,
-      },
-    ],
   },
-  LIZ: {
+  [PlayerKeys.LIZ]: {
+    key: PlayerKeys.LIZ,
     name: "Liz",
     status: "active",
-    weeks: [{}],
   },
-  JELINSKY: {
+  [PlayerKeys.JELINSKY]: {
+    key: PlayerKeys.JELINSKY,
     name: "Jelinsky",
     status: "active",
-    weeks: [{}],
   },
-  MARIA: {
+  [PlayerKeys.MARIA]: {
+    key: PlayerKeys.MARIA,
     name: "Maria",
     status: "active",
-    weeks: [{}],
   },
-  HUNTER: {
+  [PlayerKeys.HUNTER]: {
+    key: PlayerKeys.HUNTER,
     name: "Hunter",
     status: "active",
-    weeks: [{}],
   },
-  MORIAH: {
+  [PlayerKeys.MORIAH]: {
+    key: PlayerKeys.MORIAH,
     name: "Moriah",
     status: "active",
-    weeks: [{}, {}],
   },
-  Q: {
+  [PlayerKeys.Q]: {
+    key: PlayerKeys.Q,
     name: "Q",
     status: "active",
-    weeks: [{}],
   },
-  SODA: {
+  [PlayerKeys.SODA]: {
+    key: PlayerKeys.SODA,
     name: "Soda",
     status: "active",
-    weeks: [{}],
   },
-  RANDEN: {
+  [PlayerKeys.RANDEN]: {
+    key: PlayerKeys.RANDEN,
     name: "Randen",
     status: "active",
-    weeks: [{}],
   },
-  TIFFANY: {
+  [PlayerKeys.TIFFANY]: {
+    key: PlayerKeys.TIFFANY,
     name: "Tiffany",
     status: "active",
-    weeks: [{}],
   },
-  TEVIN: {
+  [PlayerKeys.TEVIN]: {
+    key: PlayerKeys.TEVIN,
     name: "Tevin",
     status: "active",
-    weeks: [
-      {
-        advantage: 5,
-      },
-    ],
   },
-  VENUS: {
+  [PlayerKeys.VENUS]: {
+    key: PlayerKeys.VENUS,
     name: "Venus",
     status: "active",
-    weeks: [
-      {},
-      {},
-      {
-        idolFound: 20,
-      },
-    ],
   },
-  TIM: {
+  [PlayerKeys.TIM]: {
+    key: PlayerKeys.TIM,
     name: "Tim",
     status: "active",
-    weeks: [{}],
   },
 };
 
 export const players: Array<Player> = Object.values(PLAYERS);
-
-export function computePlayerScore(
-  player: Player,
-  weekNumber: number,
-  scoreKey: keyof Points | "total"
-) {
-  let score = 0;
-
-  for (const week of player.weeks.slice(0, weekNumber)) {
-    if (scoreKey === "total") {
-      score +=
-        (week.teamImmunity || 0) +
-        (week.individualImmunity || 0) +
-        (week.advantage || 0) +
-        (week.idolFound || 0) +
-        (week.idolUsed || 0) +
-        (week.placement || 0);
-    } else {
-      score += week[scoreKey] || 0;
-    }
-  }
-
-  return score;
-}
-
-export function getPlayerScore(
-  player: Player,
-  weekNumber: number,
-  scoreKey: keyof Points | "total"
-) {
-  return computePlayerScore(player, weekNumber, scoreKey) || "-";
-}

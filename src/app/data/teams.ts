@@ -1,4 +1,5 @@
-import { Player, PLAYERS, computePlayerScore } from "./players";
+import { Player, PLAYERS } from "./players";
+import { computePlayerScore } from "./weeks";
 
 export type Team = {
   name: string;
