@@ -71,7 +71,11 @@ function getWeeklyPlayerRankings(weekNumber: number): PlayerRankings {
           ),
           advantage: computePlayerScore(player, weekNumber, "advantage"),
           idolFound: computePlayerScore(player, weekNumber, "idolFound"),
-          idolUsed: computePlayerScore(player, weekNumber, "idolUsed"),
+          voteNullified: computePlayerScore(
+            player,
+            weekNumber,
+            "voteNullified"
+          ),
           placement: computePlayerScore(player, weekNumber, "placement"),
         },
       };

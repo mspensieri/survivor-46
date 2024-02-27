@@ -5,7 +5,7 @@ export type Points = {
   individualImmunity?: number;
   advantage?: number;
   idolFound?: number;
-  idolUsed?: number;
+  voteNullified?: number;
   placement?: number;
 };
 
@@ -21,7 +21,7 @@ export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [
       teamImmunity: 2,
     },
     [PlayerKeys.KENZIE]: {
-      idolUsed: 1,
+      voteNullified: 1,
     },
     [PlayerKeys.CHARLIE]: {
       placement: 3,
@@ -51,7 +51,7 @@ export function computePlayerScore(
         (week[player.key]?.individualImmunity || 0) +
         (week[player.key]?.advantage || 0) +
         (week[player.key]?.idolFound || 0) +
-        (week[player.key]?.idolUsed || 0) +
+        (week[player.key]?.voteNullified || 0) +
         (week[player.key]?.placement || 0);
     } else {
       score += week[player.key]?.[scoreKey] || 0;
