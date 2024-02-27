@@ -417,7 +417,7 @@ function UncontrolledExample() {
             </Tab>
           </Tabs>
         </Tab>
-        <Tab eventKey="rules" title="Rules">
+        <Tab eventKey="rules" title="Rules" className="rules">
           The score per team is the sum of the scores of all players on the team
           across all weeks of play. In the event of a tie, the team whose
           predicted winner made it farthest in the season will win the pool.

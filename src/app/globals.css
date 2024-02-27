@@ -12,7 +12,6 @@
 :root {
     --bs-body-bg:#1a310e;
     --bs-link-color: #faece5;
-    --bs-body-color: #faece5;
     --link-color-dark: #b0aca2;
     --bs-tertiary-bg-rgb:#1a310e;
 
@@ -54,5 +53,9 @@
 
     .card-text {
         line-height: 0.75;
+    }
+
+    .rules {
+        color: #faece5;
     }
 }
