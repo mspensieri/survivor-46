@@ -352,7 +352,7 @@ function UncontrolledExample() {
                             <Card.Text key={j}>
                               {player === teamScore.team.winner ? (
                                 <span style={styles.indicatorGreenLarge}>
-                                  (W){" "}
+                                  [W]{" "}
                                 </span>
                               ) : (
                                 ""
