@@ -8,6 +8,7 @@ import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
+import { teams } from "./data/teams";
 import { Player } from "./data/players";
 import { computePlayerScore, weeks, Points } from "./data/weeks";
 import { getTeamRankings, getPlayerRankings } from "./data/rankings";
@@ -21,6 +22,10 @@ const styles = {
   badge: { width: "90px" },
   indicatorGreen: {
     fontSize: "10pt",
+    color: "green",
+  },
+  indicatorGreenLarge: {
+    fontSize: "12pt",
     color: "green",
   },
   indicatorRed: {
@@ -148,8 +153,8 @@ function generatePlayerScoresForWeek(weekNumber: number) {
         <tr>
           <th>Rank</th>
           <th>Player Name</th>
+          <th>Total Points</th>
           <th>Status</th>
-          <th>Total</th>
           <th>Team Immunity</th>
           <th>Individual Immunity</th>
           <th>Advantage</th>
@@ -224,8 +229,15 @@ function generatePlayerScoresForWeek(weekNumber: number) {
             <tr key={thisWeekScore.player.name}>
               {rank}
               <td>{thisWeekScore.player.name}</td>
-              <td>{getBadge(thisWeekScore.player)}</td>
               <td>{getScore("total")}</td>
+              <td>{getBadge(thisWeekScore.player)}</td>
+              {/* <td>
+                {teams.reduce((acc, curr) => {
+                  return curr.players.includes(thisWeekScore.player)
+                    ? acc + 1
+                    : acc;
+                }, 0)}
+              </td> */}
               <td>{getScore("teamImmunity")}</td>
               <td>{getScore("individualImmunity")}</td>
               <td>{getScore("advantage")}</td>
@@ -331,6 +343,13 @@ function UncontrolledExample() {
                         .map((player, j) => {
                           return (
                             <Card.Text key={j}>
+                              {player === teamScore.team.winner ? (
+                                <span style={styles.indicatorGreenLarge}>
+                                  (W){" "}
+                                </span>
+                              ) : (
+                                ""
+                              )}
                               {player.name} (
                               {computePlayerScore(player, currentWeek, "total")}
                               )

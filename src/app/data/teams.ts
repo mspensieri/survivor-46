@@ -3,12 +3,14 @@ import { computePlayerScore } from "./weeks";
 
 export type Team = {
   name: string;
+  winner: Player;
   players: Array<Player>;
 };
 
 export const teams: Array<Team> = [
   {
     name: "First Time in Fiji",
+    winner: PLAYERS.MORIAH,
     players: [
       PLAYERS.MORIAH,
       PLAYERS.JESS,
@@ -19,58 +21,99 @@ export const teams: Array<Team> = [
     ],
   },
   {
-    name: "Survivor Vanguard",
+    name: "Momma J",
+    winner: PLAYERS.TIM,
     players: [
+      PLAYERS.TIM,
       PLAYERS.MORIAH,
-      PLAYERS.JESS,
-      PLAYERS.JEM,
-      PLAYERS.CHARLIE,
-      PLAYERS.HUNTER,
+      PLAYERS.BEN,
       PLAYERS.VENUS,
+      PLAYERS.BHANU,
+      PLAYERS.JESS,
     ],
   },
   {
-    name: "Survivor Vanguard2",
+    name: "Sandy's Spynest",
+    winner: PLAYERS.MORIAH,
     players: [
       PLAYERS.MORIAH,
-      PLAYERS.JESS,
-      PLAYERS.JEM,
-      PLAYERS.CHARLIE,
+      PLAYERS.TEVIN,
+      PLAYERS.KENZIE,
+      PLAYERS.BEN,
       PLAYERS.HUNTER,
-      PLAYERS.VENUS,
+      PLAYERS.TIFFANY,
     ],
   },
   {
-    name: "Survivor Vanguard3",
+    name: "4BlackCats",
+    winner: PLAYERS.VENUS,
     players: [
-      PLAYERS.MORIAH,
+      PLAYERS.VENUS,
       PLAYERS.JESS,
-      PLAYERS.JEM,
       PLAYERS.CHARLIE,
       PLAYERS.HUNTER,
-      PLAYERS.VENUS,
+      PLAYERS.KENZIE,
+      PLAYERS.JEM,
     ],
   },
   {
-    name: "Survivor Vanguard4",
+    name: "Leafs Nation",
+    winner: PLAYERS.HUNTER,
     players: [
-      PLAYERS.MORIAH,
-      PLAYERS.JESS,
-      PLAYERS.JEM,
-      PLAYERS.CHARLIE,
       PLAYERS.HUNTER,
+      PLAYERS.LIZ,
       PLAYERS.VENUS,
+      PLAYERS.CHARLIE,
+      PLAYERS.JELINSKY,
+      PLAYERS.KENZIE,
     ],
   },
   {
-    name: "Survivor Vanguard5",
+    name: "Wendy's Chickens",
+    winner: PLAYERS.TIFFANY,
     players: [
-      PLAYERS.MORIAH,
-      PLAYERS.JESS,
+      PLAYERS.TIFFANY,
       PLAYERS.JEM,
-      PLAYERS.CHARLIE,
+      PLAYERS.JELINSKY,
+      PLAYERS.MORIAH,
+      PLAYERS.SODA,
+      PLAYERS.TEVIN,
+    ],
+  },
+  {
+    name: "Dean's M List (Money Team)",
+    winner: PLAYERS.MARIA,
+    players: [
+      PLAYERS.MARIA,
+      PLAYERS.MORIAH,
+      PLAYERS.Q,
+      PLAYERS.RANDEN,
+      PLAYERS.SODA,
+      PLAYERS.TEVIN,
+    ],
+  },
+  {
+    name: "Hang in there, Jeremy!",
+    winner: PLAYERS.SODA,
+    players: [
+      PLAYERS.SODA,
+      PLAYERS.Q,
+      PLAYERS.TEVIN,
+      PLAYERS.TIFFANY,
+      PLAYERS.MORIAH,
+      PLAYERS.TIM,
+    ],
+  },
+  {
+    name: "Challenge Beasts",
+    winner: PLAYERS.HUNTER,
+    players: [
       PLAYERS.HUNTER,
-      PLAYERS.VENUS,
+      PLAYERS.BEN,
+      PLAYERS.JESS,
+      PLAYERS.KENZIE,
+      PLAYERS.TEVIN,
+      PLAYERS.TIFFANY,
     ],
   },
 ];
