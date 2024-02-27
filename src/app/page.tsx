@@ -44,32 +44,37 @@ const styles = {
   },
 };
 
-function getBadge(player: Player) {
-  if (player.status === "active") {
-    return (
-      <Badge bg="secondary" style={styles.badge}>
-        Active
-      </Badge>
-    );
-  } else if (player.status === "eliminated") {
-    return (
-      <Badge bg="danger" style={styles.badge}>
-        Eliminated
-      </Badge>
-    );
-  } else if (player.status === "jury") {
-    return (
-      <Badge bg="info" style={styles.badge}>
-        Jury
-      </Badge>
-    );
-  } else {
+function getBadge(player: Player, weekNumber: number) {
+  if (
+    typeof player.eliminatedWeek !== "undefined" &&
+    weekNumber >= player.eliminatedWeek
+  ) {
+    if (player.status === "eliminated") {
+      return (
+        <Badge bg="danger" style={styles.badge}>
+          Eliminated
+        </Badge>
+      );
+    } else if (player.status === "jury") {
+      return (
+        <Badge bg="info" style={styles.badge}>
+          Jury
+        </Badge>
+      );
+    }
+  } else if (player.status === "winner" && weekNumber === 12) {
     return (
       <Badge bg="success" style={styles.badge}>
         Winner
       </Badge>
     );
   }
+
+  return (
+    <Badge bg="secondary" style={styles.badge}>
+      Active
+    </Badge>
+  );
 }
 
 function generateLeaderboardForWeek(weekNumber: number) {
@@ -237,7 +242,7 @@ function generatePlayerScoresForWeek(weekNumber: number) {
               {rank}
               <td>{thisWeekScore.player.name}</td>
               <td>{getScore("total")}</td>
-              <td>{getBadge(thisWeekScore.player)}</td>
+              <td>{getBadge(thisWeekScore.player, weekNumber)}</td>
               {/* <td>
                 {teams.reduce((acc, curr) => {
                   return curr.players.includes(thisWeekScore.player)

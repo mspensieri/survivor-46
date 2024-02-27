@@ -25,6 +25,7 @@ export type Player = {
   key: PlayerKeys;
   name: string;
   status: PlayerStatus;
+  eliminatedWeek?: number;
 };
 
 export const PLAYERS: Record<PlayerKeys, Player> = {
@@ -36,17 +37,17 @@ export const PLAYERS: Record<PlayerKeys, Player> = {
   [PlayerKeys.BEN]: {
     key: PlayerKeys.BEN,
     name: "Ben",
-    status: "eliminated",
+    status: "active",
   },
   [PlayerKeys.JESS]: {
     key: PlayerKeys.JESS,
     name: "Jess",
-    status: "jury",
+    status: "active",
   },
   [PlayerKeys.BHANU]: {
     key: PlayerKeys.BHANU,
     name: "Bhanu",
-    status: "winner",
+    status: "active",
   },
   [PlayerKeys.KENZIE]: {
     key: PlayerKeys.KENZIE,
