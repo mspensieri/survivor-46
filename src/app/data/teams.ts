@@ -25,7 +25,7 @@ export const teams: Array<Team> = [
     winner: PLAYERS.TIM,
     players: [
       PLAYERS.TIM,
-      PLAYERS.MORIAH,
+      PLAYERS.MARIA,
       PLAYERS.BEN,
       PLAYERS.VENUS,
       PLAYERS.BHANU,
