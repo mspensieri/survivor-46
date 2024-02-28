@@ -296,6 +296,30 @@ export const teams: Array<Team> = [
       PLAYERS.MORIAH,
     ],
   },
+  {
+    name: "Clyde's Castaways",
+    winner: PLAYERS.HUNTER,
+    players: [
+      PLAYERS.HUNTER,
+      PLAYERS.TEVIN,
+      PLAYERS.VENUS,
+      PLAYERS.Q,
+      PLAYERS.LIZ,
+      PLAYERS.RANDEN,
+    ],
+  },
+  {
+    name: "Louis for President",
+    winner: PLAYERS.BHANU,
+    players: [
+      PLAYERS.BHANU,
+      PLAYERS.TIFFANY,
+      PLAYERS.Q,
+      PLAYERS.TIM,
+      PLAYERS.MARIA,
+      PLAYERS.HUNTER,
+    ],
+  },
 ];
 
 export function computeTeamScore(team: Team, weekNumber: number) {
