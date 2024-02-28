@@ -7,11 +7,12 @@ import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Navbar from "react-bootstrap/esm/Navbar";
 
 import { Player } from "./data/players";
 import { computePlayerScore, weeks, Points } from "./data/weeks";
 import { getTeamRankings, getPlayerRankings } from "./data/rankings";
-import Navbar from "react-bootstrap/esm/Navbar";
+import { teams } from "./data/teams";
 
 const currentWeek = weeks.length;
 const teamRankings = getTeamRankings();
@@ -166,6 +167,7 @@ function generatePlayerScoresForWeek(weekNumber: number) {
           <th>Rank</th>
           <th>Player Name</th>
           <th>Total Points</th>
+          <th>Teams</th>
           <th>Status</th>
           <th>Immunity (team)</th>
           <th>Immunity (indiv.)</th>
@@ -242,14 +244,14 @@ function generatePlayerScoresForWeek(weekNumber: number) {
               {rank}
               <td>{thisWeekScore.player.name}</td>
               <td>{getScore("total")}</td>
-              <td>{getBadge(thisWeekScore.player, weekNumber)}</td>
-              {/* <td>
+              <td>
                 {teams.reduce((acc, curr) => {
                   return curr.players.includes(thisWeekScore.player)
                     ? acc + 1
                     : acc;
                 }, 0)}
-              </td> */}
+              </td>
+              <td>{getBadge(thisWeekScore.player, weekNumber)}</td>
               <td>{getScore("teamImmunity")}</td>
               <td>{getScore("individualImmunity")}</td>
               <td>{getScore("advantage")}</td>
