@@ -272,6 +272,18 @@ export const teams: Array<Team> = [
       PLAYERS.HUNTER,
     ],
   },
+  {
+    name: "Fiji Kokoda",
+    winner: PLAYERS.RANDEN,
+    players: [
+      PLAYERS.RANDEN,
+      PLAYERS.MARIA,
+      PLAYERS.HUNTER,
+      PLAYERS.CHARLIE,
+      PLAYERS.KENZIE,
+      PLAYERS.BEN,
+    ],
+  },
 ];
 
 export function computeTeamScore(team: Team, weekNumber: number) {
