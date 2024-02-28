@@ -9,33 +9,7 @@ export type Points = {
   placement?: number;
 };
 
-export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [
-  {
-    [PlayerKeys.BEN]: {
-      individualImmunity: 3,
-    },
-    [PlayerKeys.BHANU]: { idolFound: 10 },
-  },
-  {
-    [PlayerKeys.JEM]: {
-      teamImmunity: 2,
-    },
-    [PlayerKeys.KENZIE]: {
-      voteNullified: 1,
-    },
-    [PlayerKeys.CHARLIE]: {
-      placement: 3,
-    },
-    [PlayerKeys.TEVIN]: {
-      advantage: 5,
-    },
-  },
-  {
-    [PlayerKeys.VENUS]: {
-      idolFound: 20,
-    },
-  },
-];
+export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [{}];
 
 export function computePlayerScore(
   player: Player,
