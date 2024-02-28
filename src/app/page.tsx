@@ -288,7 +288,7 @@ function UncontrolledExample() {
         id="uncontrolled-tab-example"
         variant="underline"
         className="mb-3"
-        style={{ marginLeft: "15px" }}
+        style={{ paddingLeft: "15px" }}
       >
         <Tab eventKey="leaderboard" title="Leaderboard">
           <Tabs
