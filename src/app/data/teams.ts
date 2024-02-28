@@ -248,6 +248,30 @@ export const teams: Array<Team> = [
       PLAYERS.BEN,
     ],
   },
+  {
+    name: "S.A.D",
+    winner: PLAYERS.JEM,
+    players: [
+      PLAYERS.JEM,
+      PLAYERS.KENZIE,
+      PLAYERS.TIFFANY,
+      PLAYERS.RANDEN,
+      PLAYERS.HUNTER,
+      PLAYERS.TEVIN,
+    ],
+  },
+  {
+    name: "SIGA SLAY",
+    winner: PLAYERS.RANDEN,
+    players: [
+      PLAYERS.RANDEN,
+      PLAYERS.TEVIN,
+      PLAYERS.JELINSKY,
+      PLAYERS.SODA,
+      PLAYERS.JESS,
+      PLAYERS.HUNTER,
+    ],
+  },
 ];
 
 export function computeTeamScore(team: Team, weekNumber: number) {
