@@ -320,6 +320,30 @@ export const teams: Array<Team> = [
       PLAYERS.HUNTER,
     ],
   },
+  {
+    name: "Barely Hanging in There!",
+    winner: PLAYERS.Q,
+    players: [
+      PLAYERS.Q,
+      PLAYERS.VENUS,
+      PLAYERS.LIZ,
+      PLAYERS.BEN,
+      PLAYERS.JEM,
+      PLAYERS.HUNTER,
+    ],
+  },
+  {
+    name: "Paooooooola",
+    winner: PLAYERS.MORIAH,
+    players: [
+      PLAYERS.MORIAH,
+      PLAYERS.JELINSKY,
+      PLAYERS.VENUS,
+      PLAYERS.KENZIE,
+      PLAYERS.HUNTER,
+      PLAYERS.Q,
+    ],
+  },
 ];
 
 export function computeTeamScore(team: Team, weekNumber: number) {
