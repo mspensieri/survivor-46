@@ -39,6 +39,10 @@ const styles = {
     fontWeight: "bold",
     textDecoration: "underline",
   },
+  playerEliminated: {
+    textDecoration: "line-through",
+    color: "red",
+  },
   rulesList: { listStyleType: "disc", lineHeight: 2 },
   firstListItem: {
     marginTop: "10px",
@@ -364,7 +368,14 @@ function UncontrolledExample() {
                               ) : (
                                 ""
                               )}
-                              {player.name} (
+                              {typeof player.eliminatedWeek !== "undefined" ? (
+                                <span style={styles.playerEliminated}>
+                                  {player.name}
+                                </span>
+                              ) : (
+                                player.name
+                              )}{" "}
+                              (
                               {computePlayerScore(player, currentWeek, "total")}
                               )
                             </Card.Text>
