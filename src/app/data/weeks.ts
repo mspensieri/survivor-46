@@ -45,7 +45,7 @@ export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [
     },
     [PlayerKeys.TIFFANY]: {
       advantage: 1,
-      individualImmunity: 2,
+      idolFound: 2,
     },
     [PlayerKeys.TIM]: {
       teamImmunity: 1,
