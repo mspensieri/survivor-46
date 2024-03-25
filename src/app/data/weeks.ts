@@ -132,6 +132,41 @@ export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [
       teamImmunity: 1,
     },
   },
+  {
+    [PlayerKeys.BEN]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.CHARLIE]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.HUNTER]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.JEM]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.LIZ]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.MARIA]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.MORIAH]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.SODA]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.TEVIN]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.TIM]: {
+      teamImmunity: 1,
+    },
+    [PlayerKeys.VENUS]: {
+      teamImmunity: 1,
+    },
+  },
 ];
 
 export function computePlayerScore(
