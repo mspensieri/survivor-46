@@ -8,15 +8,21 @@ import Badge from "react-bootstrap/Badge";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Navbar from "react-bootstrap/esm/Navbar";
+import { useState } from "react";
 
-import { Player } from "./data/players";
+import { Player, players } from "./data/players";
 import { computePlayerScore, weeks, Points } from "./data/weeks";
-import { getTeamRankings, getPlayerRankings } from "./data/rankings";
-import { teams } from "./data/teams";
+import {
+  getTeamRankings,
+  getPlayerRankings,
+  TeamRankings,
+  PlayerRankings,
+} from "./data/rankings";
+import { teams, fakeTeams } from "./data/teams";
 
 const currentWeek = weeks.length;
-const teamRankings = getTeamRankings();
-const playerRankings = getPlayerRankings();
+const teamRankings = getTeamRankings(teams);
+const playerRankings = getPlayerRankings(players);
 
 const styles = {
   badge: { width: "90px" },
@@ -47,231 +53,359 @@ const styles = {
   firstListItem: {
     marginTop: "10px",
   },
+  spoilersButton: {
+    color: "white",
+    backgroundColor: "#1a310e",
+    width: "200px",
+    height: "50px",
+    border: "1px solid white",
+    borderRadius: "25px",
+    left: "50%",
+    marginTop: "200px",
+    transform: "translateX(-50%)",
+    display: "block",
+    position: "absolute",
+    zIndex: 10,
+  },
 };
 
-function getBadge(player: Player, weekNumber: number) {
-  if (
-    typeof player.eliminatedWeek !== "undefined" &&
-    weekNumber >= player.eliminatedWeek
-  ) {
-    if (player.status === "eliminated") {
+function UncontrolledExample() {
+  const [reveal, setReveal] = useState(false);
+
+  function getBadge(player: Player, weekNumber: number) {
+    if (
+      typeof player.eliminatedWeek !== "undefined" &&
+      weekNumber >= player.eliminatedWeek
+    ) {
+      if (player.status === "eliminated") {
+        return (
+          <Badge bg="danger" style={styles.badge}>
+            Eliminated
+          </Badge>
+        );
+      } else if (player.status === "jury") {
+        return (
+          <Badge bg="info" style={styles.badge}>
+            Jury
+          </Badge>
+        );
+      }
+    } else if (player.status === "winner" && weekNumber === 12) {
       return (
-        <Badge bg="danger" style={styles.badge}>
-          Eliminated
-        </Badge>
-      );
-    } else if (player.status === "jury") {
-      return (
-        <Badge bg="info" style={styles.badge}>
-          Jury
+        <Badge bg="success" style={styles.badge}>
+          Winner
         </Badge>
       );
     }
-  } else if (player.status === "winner" && weekNumber === 12) {
+
     return (
-      <Badge bg="success" style={styles.badge}>
-        Winner
+      <Badge bg="secondary" style={styles.badge}>
+        Active
       </Badge>
     );
   }
 
-  return (
-    <Badge bg="secondary" style={styles.badge}>
-      Active
-    </Badge>
-  );
-}
+  function SpoilersButton() {
+    return (
+      <button style={styles.spoilersButton} onClick={() => setReveal(true)}>
+        Reveal Spoilers
+      </button>
+    );
+  }
 
-function generateLeaderboardForWeek(weekNumber: number) {
-  const thisWeekRankings = teamRankings[weekNumber] || [];
-  const lastWeekRankings = teamRankings[weekNumber - 1];
+  function SpoilerMask({ children }: { children: React.ReactNode }) {
+    return (
+      <div>
+        <SpoilersButton></SpoilersButton>
+        <div className="blur">{children}</div>
+      </div>
+    );
+  }
 
-  return (
-    <Table striped responsive>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Team Name</th>
-          <th>Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {...thisWeekRankings.map((thisWeekScore) => {
-          const lastWeekScore = lastWeekRankings?.find(
-            (r) => r.team === thisWeekScore.team
-          );
+  function generateLeaderboardForWeek(weekNumber: number) {
+    if (!reveal && weekNumber === currentWeek - 1) {
+      return (
+        <SpoilerMask>
+          {_generateLeaderboard(
+            getTeamRankings(fakeTeams)[0],
+            getTeamRankings(fakeTeams)[0]
+          )}
+        </SpoilerMask>
+      );
+    } else {
+      return _generateLeaderboard(
+        teamRankings[weekNumber] || [],
+        teamRankings[weekNumber - 1]
+      );
+    }
+  }
 
-          function getScore() {
-            if (lastWeekScore) {
-              if (thisWeekScore.total > lastWeekScore.total) {
-                return (
-                  <td>
-                    {thisWeekScore.total}{" "}
-                    <span style={styles.indicatorGreen}>
-                      (+{thisWeekScore.total - lastWeekScore.total})
-                    </span>
-                  </td>
-                );
+  function _generateLeaderboard(
+    thisWeekRankings: TeamRankings,
+    lastWeekRankings: TeamRankings
+  ) {
+    return (
+      <Table striped responsive>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {...thisWeekRankings.map((thisWeekScore) => {
+            const lastWeekScore = lastWeekRankings?.find(
+              (r) => r.team === thisWeekScore.team
+            );
+
+            function getScore() {
+              if (lastWeekScore) {
+                if (thisWeekScore.total > lastWeekScore.total) {
+                  return (
+                    <td>
+                      {thisWeekScore.total}{" "}
+                      <span style={styles.indicatorGreen}>
+                        (+{thisWeekScore.total - lastWeekScore.total})
+                      </span>
+                    </td>
+                  );
+                } else {
+                  return <td>{thisWeekScore.total || "-"}</td>;
+                }
               } else {
                 return <td>{thisWeekScore.total || "-"}</td>;
               }
-            } else {
-              return <td>{thisWeekScore.total || "-"}</td>;
             }
-          }
 
-          let rank;
-          if (lastWeekScore) {
-            if (thisWeekScore.rank < lastWeekScore.rank) {
-              rank = (
-                <td>
-                  #{thisWeekScore.rank + 1}{" "}
-                  <span style={styles.indicatorGreen}>
-                    (▲ {lastWeekScore.rank - thisWeekScore.rank})
-                  </span>
-                </td>
-              );
-            } else if (thisWeekScore.rank > lastWeekScore.rank) {
-              rank = (
-                <td>
-                  #{thisWeekScore.rank + 1}{" "}
-                  <span style={styles.indicatorRed}>
-                    (▼ {thisWeekScore.rank - lastWeekScore.rank})
-                  </span>
-                </td>
-              );
-            } else {
-              rank = <td>#{thisWeekScore.rank + 1}</td>;
-            }
-          } else {
-            rank = <td>#{thisWeekScore.rank + 1}</td>;
-          }
-
-          return (
-            <tr key={thisWeekScore.team.name}>
-              {rank}
-              <td>{thisWeekScore.team.name}</td>
-              <td>{getScore()}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
-  );
-}
-
-function generatePlayerScoresForWeek(weekNumber: number) {
-  const thisWeekRankings = playerRankings[weekNumber] || [];
-  const lastWeekRankings = playerRankings[weekNumber - 1];
-
-  return (
-    <Table striped responsive>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Player Name</th>
-          <th>Total Points</th>
-          <th>Teams</th>
-          <th>Status</th>
-          <th>Immunity (team)</th>
-          <th>Immunity (indiv.)</th>
-          <th>Advantage</th>
-          <th>Idols Found</th>
-          <th>Votes Nullified</th>
-          <th>Jury Placement</th>
-        </tr>
-      </thead>
-      <tbody>
-        {...thisWeekRankings.map((thisWeekScore) => {
-          const lastWeekScore = lastWeekRankings?.find(
-            (p) => p.player === thisWeekScore.player
-          );
-
-          function getScore(scoreKey: keyof Points | "total") {
-            const thisWeekPoints =
-              (scoreKey === "total"
-                ? thisWeekScore.total
-                : thisWeekScore.points[scoreKey]) || 0;
-            const lastWeekPoints =
-              (scoreKey === "total"
-                ? lastWeekScore?.total
-                : lastWeekScore?.points[scoreKey]) || 0;
-
+            let rank;
             if (lastWeekScore) {
-              if (thisWeekPoints > lastWeekPoints) {
-                return (
+              if (thisWeekScore.rank < lastWeekScore.rank) {
+                rank = (
                   <td>
-                    {thisWeekPoints}{" "}
+                    #{thisWeekScore.rank + 1}{" "}
                     <span style={styles.indicatorGreen}>
-                      (+{thisWeekPoints - lastWeekPoints})
+                      (▲ {lastWeekScore.rank - thisWeekScore.rank})
+                    </span>
+                  </td>
+                );
+              } else if (thisWeekScore.rank > lastWeekScore.rank) {
+                rank = (
+                  <td>
+                    #{thisWeekScore.rank + 1}{" "}
+                    <span style={styles.indicatorRed}>
+                      (▼ {thisWeekScore.rank - lastWeekScore.rank})
                     </span>
                   </td>
                 );
               } else {
-                return <td>{thisWeekPoints || "-"}</td>;
+                rank = <td>#{thisWeekScore.rank + 1}</td>;
               }
-            } else {
-              return <td>{thisWeekPoints || "-"}</td>;
-            }
-          }
-
-          let rank;
-
-          if (lastWeekScore) {
-            if (thisWeekScore.rank < lastWeekScore.rank) {
-              rank = (
-                <td>
-                  #{thisWeekScore.rank + 1}{" "}
-                  <span style={styles.indicatorGreen}>
-                    (▲ {lastWeekScore.rank - thisWeekScore.rank})
-                  </span>
-                </td>
-              );
-            } else if (thisWeekScore.rank > lastWeekScore.rank) {
-              rank = (
-                <td>
-                  #{thisWeekScore.rank + 1}{" "}
-                  <span style={styles.indicatorRed}>
-                    (▼ {thisWeekScore.rank - lastWeekScore.rank})
-                  </span>
-                </td>
-              );
             } else {
               rank = <td>#{thisWeekScore.rank + 1}</td>;
             }
-          } else {
-            rank = <td>#{thisWeekScore.rank + 1}</td>;
-          }
 
+            return (
+              <tr key={thisWeekScore.team.name}>
+                {rank}
+                <td>{thisWeekScore.team.name}</td>
+                <td>{getScore()}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  }
+
+  function generatePlayerScoresForWeek(weekNumber: number) {
+    if (!reveal && weekNumber === currentWeek - 1) {
+      return (
+        <SpoilerMask>
+          {_generatePlayerScores(
+            getPlayerRankings(players)[0],
+            getPlayerRankings(players)[0],
+            0
+          )}
+        </SpoilerMask>
+      );
+    } else {
+      return _generatePlayerScores(
+        playerRankings[weekNumber] || [],
+        playerRankings[weekNumber - 1],
+        weekNumber
+      );
+    }
+  }
+
+  function _generatePlayerScores(
+    thisWeekRankings: PlayerRankings,
+    lastWeekRankings: PlayerRankings,
+    weekNumber: number
+  ) {
+    return (
+      <Table striped responsive>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player Name</th>
+            <th>Total Points</th>
+            <th>Teams</th>
+            <th>Status</th>
+            <th>Immunity (team)</th>
+            <th>Immunity (indiv.)</th>
+            <th>Advantage</th>
+            <th>Idols Found</th>
+            <th>Votes Nullified</th>
+            <th>Jury Placement</th>
+          </tr>
+        </thead>
+        <tbody>
+          {...thisWeekRankings.map((thisWeekScore) => {
+            const lastWeekScore = lastWeekRankings?.find(
+              (p) => p.player === thisWeekScore.player
+            );
+
+            function getScore(scoreKey: keyof Points | "total") {
+              const thisWeekPoints =
+                (scoreKey === "total"
+                  ? thisWeekScore.total
+                  : thisWeekScore.points[scoreKey]) || 0;
+              const lastWeekPoints =
+                (scoreKey === "total"
+                  ? lastWeekScore?.total
+                  : lastWeekScore?.points[scoreKey]) || 0;
+
+              if (lastWeekScore) {
+                if (thisWeekPoints > lastWeekPoints) {
+                  return (
+                    <td>
+                      {thisWeekPoints}{" "}
+                      <span style={styles.indicatorGreen}>
+                        (+{thisWeekPoints - lastWeekPoints})
+                      </span>
+                    </td>
+                  );
+                } else {
+                  return <td>{thisWeekPoints || "-"}</td>;
+                }
+              } else {
+                return <td>{thisWeekPoints || "-"}</td>;
+              }
+            }
+
+            let rank;
+
+            if (lastWeekScore) {
+              if (thisWeekScore.rank < lastWeekScore.rank) {
+                rank = (
+                  <td>
+                    #{thisWeekScore.rank + 1}{" "}
+                    <span style={styles.indicatorGreen}>
+                      (▲ {lastWeekScore.rank - thisWeekScore.rank})
+                    </span>
+                  </td>
+                );
+              } else if (thisWeekScore.rank > lastWeekScore.rank) {
+                rank = (
+                  <td>
+                    #{thisWeekScore.rank + 1}{" "}
+                    <span style={styles.indicatorRed}>
+                      (▼ {thisWeekScore.rank - lastWeekScore.rank})
+                    </span>
+                  </td>
+                );
+              } else {
+                rank = <td>#{thisWeekScore.rank + 1}</td>;
+              }
+            } else {
+              rank = <td>#{thisWeekScore.rank + 1}</td>;
+            }
+
+            return (
+              <tr key={thisWeekScore.player.name}>
+                {rank}
+                <td>{thisWeekScore.player.name}</td>
+                <td>{getScore("total")}</td>
+                <td>
+                  {teams.reduce((acc, curr) => {
+                    return curr.players.includes(thisWeekScore.player)
+                      ? acc + 1
+                      : acc;
+                  }, 0)}
+                </td>
+                <td>{getBadge(thisWeekScore.player, weekNumber)}</td>
+                <td>{getScore("teamImmunity")}</td>
+                <td>{getScore("individualImmunity")}</td>
+                <td>{getScore("advantage")}</td>
+                <td>{getScore("idolFound")}</td>
+                <td>{getScore("voteNullified")}</td>
+                <td>{getScore("placement")}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    );
+  }
+
+  function generateTeams() {
+    if (reveal) {
+      return _generateTeams(teamRankings[currentWeek - 1] || []);
+    } else {
+      return (
+        <SpoilerMask>
+          {_generateTeams(getTeamRankings(fakeTeams)[0])}
+        </SpoilerMask>
+      );
+    }
+  }
+
+  function _generateTeams(thisWeekRankings: TeamRankings) {
+    return (
+      <Row>
+        {...thisWeekRankings.map((teamScore) => {
           return (
-            <tr key={thisWeekScore.player.name}>
-              {rank}
-              <td>{thisWeekScore.player.name}</td>
-              <td>{getScore("total")}</td>
-              <td>
-                {teams.reduce((acc, curr) => {
-                  return curr.players.includes(thisWeekScore.player)
-                    ? acc + 1
-                    : acc;
-                }, 0)}
-              </td>
-              <td>{getBadge(thisWeekScore.player, weekNumber)}</td>
-              <td>{getScore("teamImmunity")}</td>
-              <td>{getScore("individualImmunity")}</td>
-              <td>{getScore("advantage")}</td>
-              <td>{getScore("idolFound")}</td>
-              <td>{getScore("voteNullified")}</td>
-              <td>{getScore("placement")}</td>
-            </tr>
+            <Col key={teamScore.team.name} xs={12} sm={6} md={4} lg={3}>
+              <Card className="text-center">
+                <Card.Body>
+                  <Card.Title style={styles.cardNumber}>
+                    {teamScore.rank === 0 ? "👑" : `#${teamScore.rank + 1}`}{" "}
+                  </Card.Title>
+                  <Card.Title>{teamScore.team.name}</Card.Title>
+                  {...[...teamScore.team.players]
+                    .sort(
+                      (a, b) =>
+                        computePlayerScore(b, currentWeek, "total") -
+                        computePlayerScore(a, currentWeek, "total")
+                    )
+                    .map((player, j) => {
+                      return (
+                        <Card.Text key={j}>
+                          {player === teamScore.team.winner ? (
+                            <span style={styles.indicatorGreenLarge}>[W] </span>
+                          ) : (
+                            ""
+                          )}
+                          {typeof player.eliminatedWeek !== "undefined" ? (
+                            <span style={styles.playerEliminated}>
+                              {player.name}
+                            </span>
+                          ) : (
+                            player.name
+                          )}{" "}
+                          ({computePlayerScore(player, currentWeek, "total")})
+                        </Card.Text>
+                      );
+                    })}
+                </Card.Body>
+              </Card>
+            </Col>
           );
         })}
-      </tbody>
-    </Table>
-  );
-}
-
-function UncontrolledExample() {
-  const thisWeekRankings = teamRankings[currentWeek - 1] || [];
+      </Row>
+    );
+  }
 
   return (
     <Row>
@@ -300,93 +434,24 @@ function UncontrolledExample() {
             id="week-selector-leaderboard"
             className="mb-3"
           >
-            <Tab eventKey="1" title="Week 1">
-              {generateLeaderboardForWeek(0)}
-            </Tab>
-            <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
-              {generateLeaderboardForWeek(1)}
-            </Tab>
-            <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
-              {generateLeaderboardForWeek(2)}
-            </Tab>
-            <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
-              {generateLeaderboardForWeek(3)}
-            </Tab>
-            <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
-              {generateLeaderboardForWeek(4)}
-            </Tab>
-            <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
-              {generateLeaderboardForWeek(5)}
-            </Tab>
-            <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
-              {generateLeaderboardForWeek(6)}
-            </Tab>
-            <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
-              {generateLeaderboardForWeek(7)}
-            </Tab>
-            <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
-              {generateLeaderboardForWeek(8)}
-            </Tab>
-            <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
-              {generateLeaderboardForWeek(9)}
-            </Tab>
-            <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
-              {generateLeaderboardForWeek(10)}
-            </Tab>
-            <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
-              {generateLeaderboardForWeek(11)}
-            </Tab>
-            <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
-              {generateLeaderboardForWeek(12)}
-            </Tab>
+            {[...Array(13)].map((_, index) => {
+              const weekNumber = index;
+              const disabled = currentWeek < weekNumber + 1;
+              return (
+                <Tab
+                  key={weekNumber}
+                  eventKey={weekNumber + 1}
+                  title={`Week ${weekNumber + 1}`}
+                  disabled={disabled}
+                >
+                  {generateLeaderboardForWeek(weekNumber)}
+                </Tab>
+              );
+            })}
           </Tabs>
         </Tab>
         <Tab eventKey="teams" title="Teams">
-          <Row>
-            {...thisWeekRankings.map((teamScore) => {
-              return (
-                <Col key={teamScore.team.name} xs={12} sm={6} md={4} lg={3}>
-                  <Card className="text-center">
-                    <Card.Body>
-                      <Card.Title style={styles.cardNumber}>
-                        {teamScore.rank === 0 ? "👑" : `#${teamScore.rank + 1}`}{" "}
-                      </Card.Title>
-                      <Card.Title>{teamScore.team.name}</Card.Title>
-                      {...[...teamScore.team.players]
-                        .sort(
-                          (a, b) =>
-                            computePlayerScore(b, currentWeek, "total") -
-                            computePlayerScore(a, currentWeek, "total")
-                        )
-                        .map((player, j) => {
-                          return (
-                            <Card.Text key={j}>
-                              {player === teamScore.team.winner ? (
-                                <span style={styles.indicatorGreenLarge}>
-                                  [W]{" "}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {typeof player.eliminatedWeek !== "undefined" ? (
-                                <span style={styles.playerEliminated}>
-                                  {player.name}
-                                </span>
-                              ) : (
-                                player.name
-                              )}{" "}
-                              (
-                              {computePlayerScore(player, currentWeek, "total")}
-                              )
-                            </Card.Text>
-                          );
-                        })}
-                    </Card.Body>
-                  </Card>
-                </Col>
-              );
-            })}
-          </Row>
+          {generateTeams()}
         </Tab>
         <Tab eventKey="players" title="Players">
           <Tabs
@@ -394,45 +459,20 @@ function UncontrolledExample() {
             id="week-selector-players"
             className="mb-3"
           >
-            <Tab eventKey="1" title="Week 1">
-              {generatePlayerScoresForWeek(0)}
-            </Tab>
-            <Tab eventKey="2" title="Week 2" disabled={currentWeek < 2}>
-              {generatePlayerScoresForWeek(1)}
-            </Tab>
-            <Tab eventKey="3" title="Week 3" disabled={currentWeek < 3}>
-              {generatePlayerScoresForWeek(2)}
-            </Tab>
-            <Tab eventKey="4" title="Week 4" disabled={currentWeek < 4}>
-              {generatePlayerScoresForWeek(3)}
-            </Tab>
-            <Tab eventKey="5" title="Week 5" disabled={currentWeek < 5}>
-              {generatePlayerScoresForWeek(4)}
-            </Tab>
-            <Tab eventKey="6" title="Week 6" disabled={currentWeek < 6}>
-              {generatePlayerScoresForWeek(5)}
-            </Tab>
-            <Tab eventKey="7" title="Week 7" disabled={currentWeek < 7}>
-              {generatePlayerScoresForWeek(6)}
-            </Tab>
-            <Tab eventKey="8" title="Week 8" disabled={currentWeek < 8}>
-              {generatePlayerScoresForWeek(7)}
-            </Tab>
-            <Tab eventKey="9" title="Week 9" disabled={currentWeek < 9}>
-              {generatePlayerScoresForWeek(8)}
-            </Tab>
-            <Tab eventKey="10" title="Week 10" disabled={currentWeek < 10}>
-              {generatePlayerScoresForWeek(9)}
-            </Tab>
-            <Tab eventKey="11" title="Week 11" disabled={currentWeek < 11}>
-              {generatePlayerScoresForWeek(10)}
-            </Tab>
-            <Tab eventKey="12" title="Week 12" disabled={currentWeek < 12}>
-              {generatePlayerScoresForWeek(11)}
-            </Tab>
-            <Tab eventKey="13" title="Week 13" disabled={currentWeek < 13}>
-              {generatePlayerScoresForWeek(12)}
-            </Tab>
+            {[...Array(13)].map((_, index) => {
+              const weekNumber = index;
+              const disabled = currentWeek < weekNumber + 1;
+              return (
+                <Tab
+                  key={weekNumber}
+                  eventKey={weekNumber + 1}
+                  title={`Week ${weekNumber + 1}`}
+                  disabled={disabled}
+                >
+                  {generatePlayerScoresForWeek(weekNumber)}
+                </Tab>
+              );
+            })}
           </Tabs>
         </Tab>
         <Tab eventKey="rules" title="Rules" className="rules">

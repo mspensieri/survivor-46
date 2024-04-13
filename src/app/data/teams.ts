@@ -359,3 +359,102 @@ export function computeTeamScore(team: Team, weekNumber: number) {
 export function getTeamScore(team: Team, weekNumber: number) {
   return computeTeamScore(team, weekNumber) || "-";
 }
+
+export const fakeTeams = [
+  {
+    name: "1",
+    winner: PLAYERS.SODA,
+    players: [
+      PLAYERS.SODA,
+      PLAYERS.MARIA,
+      PLAYERS.BHANU,
+      PLAYERS.Q,
+      PLAYERS.LIZ,
+      PLAYERS.BEN,
+    ],
+  },
+  {
+    name: "2",
+    winner: PLAYERS.JEM,
+    players: [
+      PLAYERS.JEM,
+      PLAYERS.KENZIE,
+      PLAYERS.TIFFANY,
+      PLAYERS.RANDEN,
+      PLAYERS.HUNTER,
+      PLAYERS.TEVIN,
+    ],
+  },
+  {
+    name: "3",
+    winner: PLAYERS.RANDEN,
+    players: [
+      PLAYERS.RANDEN,
+      PLAYERS.TEVIN,
+      PLAYERS.JELINSKY,
+      PLAYERS.SODA,
+      PLAYERS.JESS,
+      PLAYERS.HUNTER,
+    ],
+  },
+  {
+    name: "4",
+    winner: PLAYERS.RANDEN,
+    players: [
+      PLAYERS.RANDEN,
+      PLAYERS.MARIA,
+      PLAYERS.HUNTER,
+      PLAYERS.CHARLIE,
+      PLAYERS.KENZIE,
+      PLAYERS.BEN,
+    ],
+  },
+  {
+    name: "5",
+    winner: PLAYERS.JEM,
+    players: [
+      PLAYERS.JEM,
+      PLAYERS.JESS,
+      PLAYERS.KENZIE,
+      PLAYERS.LIZ,
+      PLAYERS.MARIA,
+      PLAYERS.MORIAH,
+    ],
+  },
+  {
+    name: "6",
+    winner: PLAYERS.HUNTER,
+    players: [
+      PLAYERS.HUNTER,
+      PLAYERS.TEVIN,
+      PLAYERS.VENUS,
+      PLAYERS.Q,
+      PLAYERS.LIZ,
+      PLAYERS.RANDEN,
+    ],
+  },
+  {
+    name: "7",
+    winner: PLAYERS.BHANU,
+    players: [
+      PLAYERS.BHANU,
+      PLAYERS.TIFFANY,
+      PLAYERS.Q,
+      PLAYERS.TIM,
+      PLAYERS.MARIA,
+      PLAYERS.HUNTER,
+    ],
+  },
+  {
+    name: "8",
+    winner: PLAYERS.Q,
+    players: [
+      PLAYERS.Q,
+      PLAYERS.VENUS,
+      PLAYERS.LIZ,
+      PLAYERS.BEN,
+      PLAYERS.JEM,
+      PLAYERS.HUNTER,
+    ],
+  },
+];

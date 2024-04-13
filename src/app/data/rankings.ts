@@ -1,5 +1,5 @@
-import { Team, teams, computeTeamScore } from "./teams";
-import { Player, players } from "./players";
+import { Team, computeTeamScore } from "./teams";
+import { Player } from "./players";
 import { weeks, Points, computePlayerScore } from "./weeks";
 
 export type TeamScore = {
@@ -18,7 +18,10 @@ export type PlayerScore = {
 export type TeamRankings = Array<TeamScore>;
 export type PlayerRankings = Array<PlayerScore>;
 
-function getWeeklyTeamRankings(weekNumber: number): TeamRankings {
+function getWeeklyTeamRankings(
+  teams: Array<Team>,
+  weekNumber: number
+): TeamRankings {
   const partialRankings = [...teams]
     .map((team) => {
       return {
@@ -50,13 +53,16 @@ function getWeeklyTeamRankings(weekNumber: number): TeamRankings {
   return rankings;
 }
 
-export function getTeamRankings(): Array<TeamRankings> {
+export function getTeamRankings(teams: Array<Team>): Array<TeamRankings> {
   return new Array(weeks.length).fill(undefined).map((_, weekNumber) => {
-    return getWeeklyTeamRankings(weekNumber);
+    return getWeeklyTeamRankings(teams, weekNumber);
   });
 }
 
-function getWeeklyPlayerRankings(weekNumber: number): PlayerRankings {
+function getWeeklyPlayerRankings(
+  players: Array<Player>,
+  weekNumber: number
+): PlayerRankings {
   const partialRankings = [...players]
     .map((player) => {
       return {
@@ -104,8 +110,10 @@ function getWeeklyPlayerRankings(weekNumber: number): PlayerRankings {
   return rankings;
 }
 
-export function getPlayerRankings(): Array<PlayerRankings> {
+export function getPlayerRankings(
+  players: Array<Player>
+): Array<PlayerRankings> {
   return new Array(weeks.length).fill(undefined).map((_, weekNumber) => {
-    return getWeeklyPlayerRankings(weekNumber);
+    return getWeeklyPlayerRankings(players, weekNumber);
   });
 }
