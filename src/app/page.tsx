@@ -107,7 +107,10 @@ function UncontrolledExample() {
 
   function SpoilersButton() {
     return (
-      <button style={styles.spoilersButton} onClick={() => setReveal(true)}>
+      <button
+        style={styles.spoilersButton as any}
+        onClick={() => setReveal(true)}
+      >
         Reveal Spoilers
       </button>
     );
