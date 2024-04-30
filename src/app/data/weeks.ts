@@ -240,6 +240,14 @@ export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [
       placement: 2,
     },
   },
+  {
+    [PlayerKeys.CHARLIE]: {
+      individualImmunity: 2,
+    },
+    [PlayerKeys.HUNTER]: {
+      placement: 2,
+    },
+  },
 ];
 
 export function computePlayerScore(
