@@ -93,7 +93,8 @@ export const PLAYERS: Record<PlayerKeys, Player> = {
   [PlayerKeys.Q]: {
     key: PlayerKeys.Q,
     name: "Q",
-    status: "active",
+    status: "jury",
+    eliminatedWeek: 11,
   },
   [PlayerKeys.SODA]: {
     key: PlayerKeys.SODA,
