@@ -274,6 +274,25 @@ export const weeks: Array<Partial<Record<PlayerKeys, Points>>> = [
       placement: 2,
     },
   },
+  {
+    [PlayerKeys.KENZIE]: {
+      individualImmunity: 2,
+      placement: 8,
+    },
+    [PlayerKeys.BEN]: {
+      individualImmunity: 2,
+      placement: 5,
+    },
+    [PlayerKeys.MARIA]: {
+      placement: 3,
+    },
+    [PlayerKeys.LIZ]: {
+      placement: 3,
+    },
+    [PlayerKeys.CHARLIE]: {
+      placement: 5,
+    },
+  },
 ];
 
 export function computePlayerScore(
